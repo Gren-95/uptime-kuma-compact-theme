@@ -2,6 +2,10 @@
 
 A sleek, low-contrast **dark theme** for [Uptime Kuma](https://github.com/louislam/uptime-kuma) status pages, tuned for **dense dashboards on big screens / TVs**. It packs many monitors into a compact, full-width grid with status-coloured uptime pills and tidy heartbeat bars.
 
+![Theme preview](./preview.svg)
+
+> Preview uses placeholder monitors — illustration only.
+
 ## Features
 
 - **Compact full-width grid** — cards stretch to fill the row (`auto-fit` + `1fr`), so there's no empty gap on the right edge.
