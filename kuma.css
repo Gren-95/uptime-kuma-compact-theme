@@ -1,0 +1,418 @@
+/* ========================================
+   COMPACT LAYOUT
+   Sleek, low-contrast dark theme for many monitors
+   ======================================== */
+
+:root {
+    /* Define Dark Theme Colors */
+    --background-color: #1b1b29;
+    /* Dark Background */
+    --secondary-bg-color: #23232f;
+    /* Slightly Lighter Background */
+    --elevated-bg-color: #2b2b3b;
+    /* Cards / hover surface */
+    --border-color: #383b52;
+    /* Border Color */
+    --text-color: #e7e7ee;
+    /* Light Text */
+    --muted-text: #9a9aa6;
+    /* Muted Text */
+
+    --accent-color: #5b8def;
+    /* Brand / interactive accent */
+    --highlight-color: #5b8def;
+    /* Used by heartbeat bar + buttons (was undefined) */
+    --ok-color: #3bd671;
+    /* Up / healthy */
+
+    --badge-bg: #3a3e52;
+    /* Badge Background */
+    --badge-text: #ffffff;
+    /* Badge Text */
+
+    --radius: 10px;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --transition: 0.15s ease;
+
+    --compact-min-width: 22ch;
+    --compact-gap: 0.35rem;
+    --compact-padding: 0.4rem 0.55rem;
+}
+
+/* On large screens widen the cards (via min-width) instead of capping them, so
+   columns still stretch to fill the full width with no right-edge gap. */
+@media (min-width: 2560px) {
+    :root {
+        --compact-min-width: 17rem;
+    }
+}
+
+/* Readability on 4K screens at distance */
+@media (min-width: 3840px) {
+    .item-name {
+        font-size: 1.3em !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.8px !important;
+    }
+
+    .badge {
+        font-size: 0.9em !important;
+    }
+
+    .wrap>.d-flex {
+        font-size: 0.9em !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.8px !important;
+    }
+}
+
+/* Container - expand to use available space */
+.container {
+    max-width: 100% !important;
+    padding: 0.5rem 0.6rem !important;
+    background-color: transparent !important;
+    color: var(--text-color);
+}
+
+/* ============ HEADER ============ */
+
+.main {
+    position: relative !important;
+}
+
+.status-page .header,
+.status-page header {
+    text-align: center;
+    margin-bottom: 0.6rem !important;
+    padding: 0.5rem 0.75rem !important;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--text-color);
+}
+
+.status-page h1 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.status-page .description {
+    font-size: 0.875rem !important;
+    margin-bottom: 0.5rem !important;
+    color: var(--muted-text);
+}
+
+.status-page .logo {
+    max-height: 40px !important;
+    margin-bottom: 0.5rem !important;
+}
+
+/* ============ OVERALL STATUS ============ */
+
+.overall-status {
+    padding: 0.5rem 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    text-align: center;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-color);
+}
+
+/* Position overall status in header on desktop */
+body:not(.mobile) .overall-status {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: auto !important;
+    min-width: 14rem !important;
+    margin: 0 !important;
+}
+
+/* ============ MONITOR GROUPS ============ */
+
+.shadow-box {
+    margin-bottom: 0.45rem !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.shadow-box .group-title,
+.monitor-group-title {
+    padding: 0.25rem 0.2rem !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.6px !important;
+    text-transform: uppercase !important;
+    margin-bottom: 0.3rem !important;
+    color: var(--muted-text);
+}
+
+/* ============ MONITOR LIST - Compact Grid ============ */
+
+/* Key selector: .monitor-list > .monitor-list targets the actual item container.
+   auto-fit + 1fr makes the columns stretch to fill the full row width, so there
+   is no leftover gap on the right edge. */
+.monitor-list>.monitor-list {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(var(--compact-min-width), 1fr)) !important;
+    grid-gap: var(--compact-gap) !important;
+}
+
+/* Individual monitor item */
+.item {
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: var(--compact-padding) !important;
+    background-color: var(--elevated-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-color);
+}
+
+/* Stack item content vertically and fill the card height so the heartbeat
+   bar can sit at the bottom. */
+.item>.row {
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    gap: 0.25rem !important;
+}
+
+.row>div {
+    width: 100% !important;
+}
+
+/* Push the heartbeat / uptime block to the bottom of the card so bars align
+   across a row regardless of cert pills or name length. */
+.item>.row>div:last-child {
+    margin-top: auto !important;
+}
+
+/* Monitor name styling */
+.item-name {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    color: var(--text-color);
+}
+
+/* ============ BADGES ============ */
+
+.row {
+    position: relative !important;
+}
+
+.badge {
+    padding: 0.1rem 0.4rem !important;
+    font-size: 0.6rem !important;
+    font-weight: 700 !important;
+    border-radius: 999px !important;
+    color: #fff !important;
+    background-color: var(--badge-bg);
+}
+
+/* High-contrast, status-coloured uptime / state pills.
+   Kuma tags these with Bootstrap contextual classes; force readable colours
+   instead of the washed-out default grey. */
+.badge.bg-primary,
+.badge.bg-success {
+    background-color: var(--ok-color) !important;
+    color: #06210f !important;
+}
+
+.badge.bg-danger {
+    background-color: #f25c5c !important;
+    color: #2a0606 !important;
+}
+
+.badge.bg-warning {
+    background-color: #f5c451 !important;
+    color: #2a1f00 !important;
+}
+
+.badge.bg-secondary,
+.badge.bg-dark {
+    background-color: #4a4f6a !important;
+    color: #fff !important;
+}
+
+/* Keep the uptime % and cert-expiry pills inline in normal flow (percentage
+   sits to the left of the cert badge) instead of overlapping the name. */
+.item .badge {
+    position: static !important;
+    transform: none !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 0.3rem 0.1rem 0 !important;
+}
+
+/* Let the name shrink/ellipsis next to the inline pills. */
+.item .info {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 0.15rem 0 !important;
+}
+
+.item .info .item-name {
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+}
+
+/* ============ HEARTBEAT BAR ============ */
+
+.hp-bar-big,
+.beat-bar {
+    height: 13px !important;
+    width: 100% !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+}
+
+.beat {
+    min-width: 2px !important;
+    margin: 0 1px !important;
+    border-radius: 1px !important;
+}
+
+/* Uptime percentage and time labels */
+.wrap>.d-flex {
+    font-size: 0.62rem !important;
+    color: var(--muted-text);
+}
+
+/* ============ MARGIN COMPACTING ============ */
+
+.mb-4,
+.mb-5 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mt-4 {
+    margin-top: 0.5rem !important;
+}
+
+.mt-5 {
+    margin-top: 0 !important;
+}
+
+/* ============ INCIDENTS ============ */
+
+.incident {
+    padding: 0.6rem 0.85rem !important;
+    margin-bottom: 0.5rem !important;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-color);
+    border-radius: var(--radius);
+    color: var(--text-color);
+}
+
+.incident-title {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.2rem !important;
+    color: var(--text-color);
+}
+
+.incident .content {
+    font-size: 0.75rem !important;
+    line-height: 1.4;
+}
+
+.incident .date {
+    font-size: 0.6rem !important;
+    margin-top: 0.35rem !important;
+    color: var(--muted-text);
+}
+
+/* ============ FOOTER ============ */
+
+footer,
+.footer {
+    padding: 0.75rem 0 !important;
+    margin-top: 1.5rem !important;
+    font-size: 0.7rem !important;
+    text-align: center;
+    color: var(--muted-text);
+}
+
+footer .alert-heading {
+    padding: 0 !important;
+}
+
+/* ============ BUTTONS ============ */
+
+.btn {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    background-color: var(--highlight-color) !important;
+    color: var(--badge-text) !important;
+    border: none !important;
+    transition: filter var(--transition);
+}
+
+.btn:hover {
+    filter: brightness(1.1);
+}
+
+/* ============ FORMS ============ */
+
+input,
+select,
+textarea {
+    padding: 0.4rem 0.6rem !important;
+    font-size: 0.8rem !important;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.2) !important;
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem !important;
+    }
+
+    .status-page h1 {
+        font-size: 1.25rem !important;
+    }
+
+    .item {
+        padding: 0.5rem !important;
+    }
+
+    .hp-bar-big,
+    .beat-bar {
+        height: 14px !important;
+    }
+}
